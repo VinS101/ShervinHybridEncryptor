@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ShervinDesEncryptor
 {
-    public partial class Form1 : Form
+    public partial class ShervinDesEncryptorForm : Form
     {
-        public Form1()
+        public ShervinDesEncryptorForm()
         {
             InitializeComponent();
         }

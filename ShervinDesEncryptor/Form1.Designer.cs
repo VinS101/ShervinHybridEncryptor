@@ -1,6 +1,6 @@
 ﻿namespace ShervinDesEncryptor
 {
-    partial class Form1
+    partial class ShervinDesEncryptorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShervinDesEncryptorForm));
+            this.SuspendLayout();
+            // 
+            // ShervinDesEncryptorForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(674, 366);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "ShervinDesEncryptorForm";
+            this.Text = "Shervin DES Encryptor";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
