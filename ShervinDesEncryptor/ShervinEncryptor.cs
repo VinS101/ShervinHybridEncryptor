@@ -12,13 +12,14 @@ namespace ShervinDesEncryptor
     {
         public static string Encrypt(string inputText, string key)
         {
-            DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider();
-            desProvider.Mode = CipherMode.ECB;
-            desProvider.Padding = PaddingMode.PKCS7;
-            desProvider.Key = Encoding.ASCII.GetBytes("e5d66cf8");
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            des.Mode = CipherMode.ECB;
+            des.Padding = PaddingMode.PKCS7;
+            des.Key = Encoding.ASCII.GetBytes(key);
+
             using (MemoryStream stream = new MemoryStream())
             {
-                using (CryptoStream cs = new CryptoStream(stream, desProvider.CreateEncryptor(), CryptoStreamMode.Write))
+                using (CryptoStream cs = new CryptoStream(stream, des.CreateEncryptor(), CryptoStreamMode.Write))
                 {
                     byte[] data = Encoding.Default.GetBytes(inputText);
                     cs.Write(data, 0, data.Length);
@@ -30,7 +31,29 @@ namespace ShervinDesEncryptor
 
         public static string Decrypt(string inputText, string key)
         {
-            return "test";
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            des.Mode = CipherMode.ECB;
+            des.Padding = PaddingMode.PKCS7;
+            des.Key = Encoding.ASCII.GetBytes(key);
+
+            using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(inputText)))
+            {
+                using (CryptoStream cs = new CryptoStream(stream, des.CreateDecryptor(), CryptoStreamMode.Read))
+                {
+                    using (StreamReader sr = new StreamReader(cs, Encoding.ASCII))
+                    {
+                        return sr.ReadToEnd();
+                    }
+                }
+            }
+        }
+
+        public static string GenerateRandomKey()
+        {
+            Random random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 8)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

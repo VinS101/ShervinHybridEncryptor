@@ -48,6 +48,7 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.CopyOutputText = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,8 +87,10 @@
             this.InputText.Location = new System.Drawing.Point(149, 39);
             this.InputText.Multiline = true;
             this.InputText.Name = "InputText";
+            this.InputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.InputText.Size = new System.Drawing.Size(309, 56);
             this.InputText.TabIndex = 3;
+            this.InputText.TextChanged += new System.EventHandler(this.InputText_TextChanged);
             this.InputText.Validating += new System.ComponentModel.CancelEventHandler(this.InputText_Validating);
             // 
             // SecretKey
@@ -156,10 +159,13 @@
             // 
             // OutputText
             // 
+            this.OutputText.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.OutputText.CausesValidation = false;
             this.OutputText.Location = new System.Drawing.Point(149, 228);
             this.OutputText.Multiline = true;
             this.OutputText.Name = "OutputText";
+            this.OutputText.ReadOnly = true;
+            this.OutputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.OutputText.Size = new System.Drawing.Size(309, 54);
             this.OutputText.TabIndex = 10;
             // 
@@ -168,9 +174,9 @@
             this.OpenOutputNotepad.CausesValidation = false;
             this.OpenOutputNotepad.Location = new System.Drawing.Point(464, 228);
             this.OpenOutputNotepad.Name = "OpenOutputNotepad";
-            this.OpenOutputNotepad.Size = new System.Drawing.Size(75, 42);
+            this.OpenOutputNotepad.Size = new System.Drawing.Size(75, 22);
             this.OpenOutputNotepad.TabIndex = 11;
-            this.OpenOutputNotepad.Text = "Open in Notepad";
+            this.OpenOutputNotepad.Text = "Open Text";
             this.OpenOutputNotepad.UseVisualStyleBackColor = true;
             this.OpenOutputNotepad.Click += new System.EventHandler(this.OpenOutputNotepad_Click);
             // 
@@ -204,6 +210,7 @@
             this.RandomizeSecretKey.TabIndex = 14;
             this.RandomizeSecretKey.Text = "Random";
             this.RandomizeSecretKey.UseVisualStyleBackColor = true;
+            this.RandomizeSecretKey.Click += new System.EventHandler(this.RandomizeSecretKey_Click);
             // 
             // errorProvider1
             // 
@@ -218,11 +225,23 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // CopyOutputText
+            // 
+            this.CopyOutputText.CausesValidation = false;
+            this.CopyOutputText.Location = new System.Drawing.Point(464, 256);
+            this.CopyOutputText.Name = "CopyOutputText";
+            this.CopyOutputText.Size = new System.Drawing.Size(75, 22);
+            this.CopyOutputText.TabIndex = 15;
+            this.CopyOutputText.Text = "Copy";
+            this.CopyOutputText.UseVisualStyleBackColor = true;
+            this.CopyOutputText.Click += new System.EventHandler(this.CopyOutputText_Click);
+            // 
             // ShervinDesEncryptorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(589, 356);
+            this.Controls.Add(this.CopyOutputText);
             this.Controls.Add(this.RandomizeSecretKey);
             this.Controls.Add(this.ExecuteButton);
             this.Controls.Add(this.ClearInputText);
@@ -270,6 +289,7 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button CopyOutputText;
     }
 }
 

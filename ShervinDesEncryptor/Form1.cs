@@ -38,6 +38,11 @@ namespace ShervinDesEncryptor
             {
                 errorProvider1.SetError(SecretKey, "You must enter a secret key");
             }
+            else if (SecretKey.Text.Length != 8)
+            {
+                MessageBox.Show("Error: They key has to be exactly 8 characters");
+                errorProvider1.SetError(SecretKey, "");
+            }
             else
             {
                 errorProvider1.SetError(SecretKey, "");
@@ -47,7 +52,8 @@ namespace ShervinDesEncryptor
         private bool IsValid()
         {
             if (string.IsNullOrWhiteSpace(InputText.Text) ||
-                string.IsNullOrWhiteSpace(SecretKey.Text))
+                string.IsNullOrWhiteSpace(SecretKey.Text) ||
+                SecretKey.Text.Length != 8)
             {
                 return false;
             }
@@ -74,14 +80,30 @@ namespace ShervinDesEncryptor
             InputText.Clear();
         }
 
+        private void InputText_TextChanged(object sender, EventArgs e)
+        {
+            OpenOutputNotepad.Enabled = false;
+            CopyOutputText.Enabled = false;
+            OutputText.Clear();
+        }
 
         private void OpenOutputNotepad_Click(object sender, EventArgs e)
         {
             string currentDir = Directory.GetCurrentDirectory();
-            string fileName = DateTime.Now.ToString("Output_MMddYYYYhhmmss.txt");
+            string fileName = "Output_" + DateTime.Now.ToString("MMddYYYYhhmmss.txt");
             string fullPath = currentDir + @"\" + fileName;
             System.IO.File.WriteAllText(fullPath, OutputText.Text);
             System.Diagnostics.Process.Start(fullPath);
+        }
+
+        private void RandomizeSecretKey_Click(object sender, EventArgs e)
+        {
+            SecretKey.Text = ShervinEncryptor.GenerateRandomKey();
+        }
+
+        private void CopyOutputText_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(OutputText.Text);
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
@@ -99,7 +121,7 @@ namespace ShervinDesEncryptor
             }
             else
             {
-                MessageBox.Show("Invalid input. Make sure all fields are populated");
+                MessageBox.Show("Invalid input. Make sure your input is correct.");
             }
         }
 
@@ -155,6 +177,7 @@ namespace ShervinDesEncryptor
             Debug.WriteLine("inputText:" + inputText);
             Debug.WriteLine("Secret Key:" + key);
 
+       
             if (OperationCode == 1)
                 e.Result = ShervinEncryptor.Encrypt(inputText, key);
             else
@@ -165,11 +188,23 @@ namespace ShervinDesEncryptor
         {
             Debug.WriteLine("Process completed");
 
-            string result = e.Result.ToString();
+            if (e.Error == null)
+            {
+                string result = e.Result.ToString();
+                Debug.WriteLine("Result: " + result);
 
-            Debug.WriteLine("Result: " + result);
 
-            OutputText.Text = result;
+                OutputText.Clear();
+                OutputText.Text = result;
+
+                CopyOutputText.Enabled = true;
+                OpenOutputNotepad.Enabled = false;
+            }
+            else
+            {
+                string message = "Invalid data to decrypt. Please make sure you are decrypting text that was decrypted using your secret key";
+                MessageBox.Show(message);
+            }
         }
 
     }
