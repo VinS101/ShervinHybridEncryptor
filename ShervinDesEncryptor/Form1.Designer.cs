@@ -47,6 +47,7 @@
             this.RandomizeSecretKey = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,6 +142,7 @@
             this.ImportSecretKey.TabIndex = 8;
             this.ImportSecretKey.Text = "Import";
             this.ImportSecretKey.UseVisualStyleBackColor = true;
+            this.ImportSecretKey.Click += new System.EventHandler(this.ImportSecretKey_Click);
             // 
             // OutputLabel
             // 
@@ -170,6 +172,7 @@
             this.OpenOutputNotepad.TabIndex = 11;
             this.OpenOutputNotepad.Text = "Open in Notepad";
             this.OpenOutputNotepad.UseVisualStyleBackColor = true;
+            this.OpenOutputNotepad.Click += new System.EventHandler(this.OpenOutputNotepad_Click);
             // 
             // ClearInputText
             // 
@@ -209,6 +212,11 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // ShervinDesEncryptorForm
             // 
@@ -261,6 +269,7 @@
         private System.Windows.Forms.Button RandomizeSecretKey;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

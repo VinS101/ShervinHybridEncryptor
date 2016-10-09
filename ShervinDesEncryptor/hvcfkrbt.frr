@@ -77,11 +77,9 @@ namespace ShervinDesEncryptor
 
         private void OpenOutputNotepad_Click(object sender, EventArgs e)
         {
-            string currentDir = Directory.GetCurrentDirectory();
-            string fileName = DateTime.Now.ToString("Output_MMddYYYYhhmmss.txt");
-            string fullPath = currentDir + @"\" + fileName;
-            System.IO.File.WriteAllText(fullPath, OutputText.Text);
-            System.Diagnostics.Process.Start(fullPath);
+            //System.IO.File.WriteAllText(@"C:\test.txt", OutputText.Text);
+            //System.Diagnostics.Process.Start(@"C:\test.txt");
+            Debug.WriteLine(Directory.GetCurrentDirectory());
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
@@ -154,22 +152,11 @@ namespace ShervinDesEncryptor
             Debug.WriteLine("Operation Code: " + OperationCode);
             Debug.WriteLine("inputText:" + inputText);
             Debug.WriteLine("Secret Key:" + key);
-
-            if (OperationCode == 1)
-                e.Result = ShervinEncryptor.Encrypt(inputText, key);
-            else
-                e.Result = ShervinEncryptor.Decrypt(inputText, key);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Debug.WriteLine("Process completed");
-
-            string result = e.Result.ToString();
-
-            Debug.WriteLine("Result: " + result);
-
-            OutputText.Text = result;
         }
 
     }
