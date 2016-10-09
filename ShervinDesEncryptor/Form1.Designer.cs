@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShervinDesEncryptorForm));
             this.InputTextLabel = new System.Windows.Forms.Label();
             this.SecretKeyLabel = new System.Windows.Forms.Label();
@@ -44,6 +45,9 @@
             this.ClearInputText = new System.Windows.Forms.Button();
             this.ExecuteButton = new System.Windows.Forms.Button();
             this.RandomizeSecretKey = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // InputTextLabel
@@ -83,6 +87,7 @@
             this.InputText.Name = "InputText";
             this.InputText.Size = new System.Drawing.Size(309, 56);
             this.InputText.TabIndex = 3;
+            this.InputText.Validating += new System.ComponentModel.CancelEventHandler(this.InputText_Validating);
             // 
             // SecretKey
             // 
@@ -90,10 +95,13 @@
             this.SecretKey.Name = "SecretKey";
             this.SecretKey.Size = new System.Drawing.Size(309, 20);
             this.SecretKey.TabIndex = 4;
+            this.SecretKey.Validating += new System.ComponentModel.CancelEventHandler(this.SecretKey_Validating);
             // 
             // EncryptRadioButton
             // 
             this.EncryptRadioButton.AutoSize = true;
+            this.EncryptRadioButton.CausesValidation = false;
+            this.EncryptRadioButton.Checked = true;
             this.EncryptRadioButton.Location = new System.Drawing.Point(149, 183);
             this.EncryptRadioButton.Name = "EncryptRadioButton";
             this.EncryptRadioButton.Size = new System.Drawing.Size(83, 17);
@@ -105,25 +113,28 @@
             // DecryptRadioButton
             // 
             this.DecryptRadioButton.AutoSize = true;
+            this.DecryptRadioButton.CausesValidation = false;
             this.DecryptRadioButton.Location = new System.Drawing.Point(238, 183);
             this.DecryptRadioButton.Name = "DecryptRadioButton";
             this.DecryptRadioButton.Size = new System.Drawing.Size(87, 17);
             this.DecryptRadioButton.TabIndex = 6;
-            this.DecryptRadioButton.TabStop = true;
             this.DecryptRadioButton.Text = "DES Decrypt";
             this.DecryptRadioButton.UseVisualStyleBackColor = true;
             // 
             // ImportInputText
             // 
+            this.ImportInputText.CausesValidation = false;
             this.ImportInputText.Location = new System.Drawing.Point(464, 39);
             this.ImportInputText.Name = "ImportInputText";
             this.ImportInputText.Size = new System.Drawing.Size(75, 23);
             this.ImportInputText.TabIndex = 7;
             this.ImportInputText.Text = "Import";
             this.ImportInputText.UseVisualStyleBackColor = true;
+            this.ImportInputText.Click += new System.EventHandler(this.ImportInputText_Click);
             // 
             // ImportSecretKey
             // 
+            this.ImportSecretKey.CausesValidation = false;
             this.ImportSecretKey.Location = new System.Drawing.Point(464, 125);
             this.ImportSecretKey.Name = "ImportSecretKey";
             this.ImportSecretKey.Size = new System.Drawing.Size(55, 23);
@@ -143,6 +154,7 @@
             // 
             // OutputText
             // 
+            this.OutputText.CausesValidation = false;
             this.OutputText.Location = new System.Drawing.Point(149, 228);
             this.OutputText.Multiline = true;
             this.OutputText.Name = "OutputText";
@@ -151,6 +163,7 @@
             // 
             // OpenOutputNotepad
             // 
+            this.OpenOutputNotepad.CausesValidation = false;
             this.OpenOutputNotepad.Location = new System.Drawing.Point(464, 228);
             this.OpenOutputNotepad.Name = "OpenOutputNotepad";
             this.OpenOutputNotepad.Size = new System.Drawing.Size(75, 42);
@@ -160,12 +173,14 @@
             // 
             // ClearInputText
             // 
+            this.ClearInputText.CausesValidation = false;
             this.ClearInputText.Location = new System.Drawing.Point(464, 72);
             this.ClearInputText.Name = "ClearInputText";
             this.ClearInputText.Size = new System.Drawing.Size(75, 23);
             this.ClearInputText.TabIndex = 12;
             this.ClearInputText.Text = "Clear";
             this.ClearInputText.UseVisualStyleBackColor = true;
+            this.ClearInputText.Click += new System.EventHandler(this.ClearInputText_Click);
             // 
             // ExecuteButton
             // 
@@ -175,15 +190,25 @@
             this.ExecuteButton.TabIndex = 13;
             this.ExecuteButton.Text = "Execute!";
             this.ExecuteButton.UseVisualStyleBackColor = true;
+            this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
             // RandomizeSecretKey
             // 
+            this.RandomizeSecretKey.CausesValidation = false;
             this.RandomizeSecretKey.Location = new System.Drawing.Point(523, 125);
             this.RandomizeSecretKey.Name = "RandomizeSecretKey";
             this.RandomizeSecretKey.Size = new System.Drawing.Size(55, 23);
             this.RandomizeSecretKey.TabIndex = 14;
             this.RandomizeSecretKey.Text = "Random";
             this.RandomizeSecretKey.UseVisualStyleBackColor = true;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // ShervinDesEncryptorForm
             // 
@@ -209,7 +234,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ShervinDesEncryptorForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Shervin DES Encryptor";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,6 +259,8 @@
         private System.Windows.Forms.Button ClearInputText;
         private System.Windows.Forms.Button ExecuteButton;
         private System.Windows.Forms.Button RandomizeSecretKey;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
