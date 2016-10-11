@@ -62,6 +62,19 @@ namespace ShervinDesEncryptor
 
         #endregion
 
+        #region Control Events
+        private void DecryptRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (DecryptRadioButton.Checked)
+            {
+                ExecuteButton.Text = "Decrypt!";
+            }
+            else
+            {
+                ExecuteButton.Text = "Encrypt!";
+            }
+        }
+
         private void ImportInputText_Click(object sender, EventArgs e)
         {
             InputText.Text = ImportTextfile();
@@ -124,7 +137,9 @@ namespace ShervinDesEncryptor
                 MessageBox.Show("Invalid input. Make sure your input is correct.");
             }
         }
+        #endregion
 
+        #region Private Methods
         private int OperationCode
         {
             get
@@ -165,7 +180,9 @@ namespace ShervinDesEncryptor
             }
             return string.Empty;
         }
+        #endregion
 
+        #region MultiThreading
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             List<object> genericlist = e.Argument as List<object>;
@@ -206,6 +223,6 @@ namespace ShervinDesEncryptor
                 MessageBox.Show(message);
             }
         }
-
+        #endregion
     }
 }

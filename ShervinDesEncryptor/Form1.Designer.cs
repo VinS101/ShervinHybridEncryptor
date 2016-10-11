@@ -124,6 +124,7 @@
             this.DecryptRadioButton.TabIndex = 6;
             this.DecryptRadioButton.Text = "DES Decrypt";
             this.DecryptRadioButton.UseVisualStyleBackColor = true;
+            this.DecryptRadioButton.CheckedChanged += new System.EventHandler(this.DecryptRadioButton_CheckedChanged);
             // 
             // ImportInputText
             // 
@@ -193,11 +194,11 @@
             // 
             // ExecuteButton
             // 
-            this.ExecuteButton.Location = new System.Drawing.Point(229, 326);
+            this.ExecuteButton.Location = new System.Drawing.Point(201, 305);
             this.ExecuteButton.Name = "ExecuteButton";
-            this.ExecuteButton.Size = new System.Drawing.Size(136, 23);
+            this.ExecuteButton.Size = new System.Drawing.Size(186, 39);
             this.ExecuteButton.TabIndex = 13;
-            this.ExecuteButton.Text = "Execute!";
+            this.ExecuteButton.Text = "Encrypt!";
             this.ExecuteButton.UseVisualStyleBackColor = true;
             this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
