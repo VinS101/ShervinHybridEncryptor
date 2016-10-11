@@ -73,6 +73,7 @@ namespace ShervinDesEncryptor
             {
                 ExecuteButton.Text = "Encrypt!";
             }
+            OutputText.Clear();
         }
 
         private void ImportInputText_Click(object sender, EventArgs e)
@@ -215,11 +216,11 @@ namespace ShervinDesEncryptor
                 OutputText.Text = result;
 
                 CopyOutputText.Enabled = true;
-                OpenOutputNotepad.Enabled = false;
+                OpenOutputNotepad.Enabled = true;
             }
             else
             {
-                string message = "Invalid data to decrypt. Please make sure you are decrypting text that was decrypted using your secret key";
+                string message = "Invalid data to decrypt. Please make sure you are decrypting ciphertext that was decrypted using your secret key";
                 MessageBox.Show(message);
             }
         }
