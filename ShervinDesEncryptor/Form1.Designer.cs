@@ -49,6 +49,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.CopyOutputText = new System.Windows.Forms.Button();
+            this.Mode = new System.Windows.Forms.Label();
+            this.EncryptionModeDropdown = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,7 +154,7 @@
             // 
             this.OutputLabel.AutoSize = true;
             this.OutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.OutputLabel.Location = new System.Drawing.Point(40, 240);
+            this.OutputLabel.Location = new System.Drawing.Point(40, 245);
             this.OutputLabel.Name = "OutputLabel";
             this.OutputLabel.Size = new System.Drawing.Size(69, 20);
             this.OutputLabel.TabIndex = 9;
@@ -162,18 +164,18 @@
             // 
             this.OutputText.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.OutputText.CausesValidation = false;
-            this.OutputText.Location = new System.Drawing.Point(149, 228);
+            this.OutputText.Location = new System.Drawing.Point(149, 233);
             this.OutputText.Multiline = true;
             this.OutputText.Name = "OutputText";
             this.OutputText.ReadOnly = true;
             this.OutputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.OutputText.Size = new System.Drawing.Size(309, 54);
+            this.OutputText.Size = new System.Drawing.Size(309, 78);
             this.OutputText.TabIndex = 10;
             // 
             // OpenOutputNotepad
             // 
             this.OpenOutputNotepad.CausesValidation = false;
-            this.OpenOutputNotepad.Location = new System.Drawing.Point(464, 228);
+            this.OpenOutputNotepad.Location = new System.Drawing.Point(464, 261);
             this.OpenOutputNotepad.Name = "OpenOutputNotepad";
             this.OpenOutputNotepad.Size = new System.Drawing.Size(75, 22);
             this.OpenOutputNotepad.TabIndex = 11;
@@ -194,7 +196,7 @@
             // 
             // ExecuteButton
             // 
-            this.ExecuteButton.Location = new System.Drawing.Point(201, 305);
+            this.ExecuteButton.Location = new System.Drawing.Point(200, 341);
             this.ExecuteButton.Name = "ExecuteButton";
             this.ExecuteButton.Size = new System.Drawing.Size(186, 39);
             this.ExecuteButton.TabIndex = 13;
@@ -229,7 +231,7 @@
             // CopyOutputText
             // 
             this.CopyOutputText.CausesValidation = false;
-            this.CopyOutputText.Location = new System.Drawing.Point(464, 256);
+            this.CopyOutputText.Location = new System.Drawing.Point(464, 289);
             this.CopyOutputText.Name = "CopyOutputText";
             this.CopyOutputText.Size = new System.Drawing.Size(75, 22);
             this.CopyOutputText.TabIndex = 15;
@@ -237,11 +239,36 @@
             this.CopyOutputText.UseVisualStyleBackColor = true;
             this.CopyOutputText.Click += new System.EventHandler(this.CopyOutputText_Click);
             // 
+            // Mode
+            // 
+            this.Mode.AutoSize = true;
+            this.Mode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.Mode.Location = new System.Drawing.Point(341, 180);
+            this.Mode.Name = "Mode";
+            this.Mode.Size = new System.Drawing.Size(58, 20);
+            this.Mode.TabIndex = 16;
+            this.Mode.Text = "Mode:";
+            // 
+            // EncryptionModeDropdown
+            // 
+            this.EncryptionModeDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.EncryptionModeDropdown.FormattingEnabled = true;
+            this.EncryptionModeDropdown.Items.AddRange(new object[] {
+            "ECB",
+            "CBC"});
+            this.EncryptionModeDropdown.Location = new System.Drawing.Point(405, 182);
+            this.EncryptionModeDropdown.Name = "EncryptionModeDropdown";
+            this.EncryptionModeDropdown.Size = new System.Drawing.Size(56, 21);
+            this.EncryptionModeDropdown.TabIndex = 17;
+            this.EncryptionModeDropdown.SelectedIndex = 0;
+            // 
             // ShervinDesEncryptorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 356);
+            this.ClientSize = new System.Drawing.Size(585, 392);
+            this.Controls.Add(this.EncryptionModeDropdown);
+            this.Controls.Add(this.Mode);
             this.Controls.Add(this.CopyOutputText);
             this.Controls.Add(this.RandomizeSecretKey);
             this.Controls.Add(this.ExecuteButton);
@@ -291,6 +318,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button CopyOutputText;
+        private System.Windows.Forms.ComboBox EncryptionModeDropdown;
+        private System.Windows.Forms.Label Mode;
     }
 }
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
 
 namespace ShervinDesEncryptor
 {
@@ -130,6 +131,7 @@ namespace ShervinDesEncryptor
                 args.Add(this.OperationCode);   // Encrypt or decrypt
                 args.Add(this.InputText.Text);
                 args.Add(this.SecretKey.Text);
+                args.Add(this.SelectedMode);
 
                 backgroundWorker1.RunWorkerAsync(args);
             }
@@ -141,6 +143,22 @@ namespace ShervinDesEncryptor
         #endregion
 
         #region Private Methods
+        private CipherMode SelectedMode
+        {
+            get
+            {
+                if (EncryptionModeDropdown.SelectedIndex == 0)
+                {
+                    return CipherMode.ECB;
+                }
+                else if (EncryptionModeDropdown.SelectedIndex == 1)
+                {
+                    return CipherMode.CBC;
+                }
+                throw new Exception("Invalid Mode");
+            }
+        }
+
         private int OperationCode
         {
             get
@@ -184,22 +202,23 @@ namespace ShervinDesEncryptor
         #endregion
 
         #region MultiThreading
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             List<object> genericlist = e.Argument as List<object>;
             int OperationCode = (int)genericlist[0];
             string inputText = genericlist[1].ToString();
             string key = genericlist[2].ToString();
+            CipherMode mode = (CipherMode)genericlist[3];
 
             Debug.WriteLine("Operation Code: " + OperationCode);
             Debug.WriteLine("inputText:" + inputText);
             Debug.WriteLine("Secret Key:" + key);
 
-       
             if (OperationCode == 1)
-                e.Result = ShervinEncryptor.Encrypt(inputText, key);
+                e.Result = ShervinEncryptor.Encrypt(inputText, key, mode);
             else
-                e.Result = ShervinEncryptor.Decrypt(inputText, key);
+                e.Result = ShervinEncryptor.Decrypt(inputText, key, mode);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -220,7 +239,8 @@ namespace ShervinDesEncryptor
             }
             else
             {
-                string message = "Invalid data to decrypt. Please make sure you are decrypting ciphertext that was decrypted using your secret key";
+                string message = @"Invalid data to decrypt. 
+                Please make sure you are decrypting ciphertext that was decrypted using your chosen secret key and encryption mode.";
                 MessageBox.Show(message);
             }
         }

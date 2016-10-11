@@ -10,16 +10,18 @@ namespace ShervinDesEncryptor
 {
     public class ShervinEncryptor
     {
-        public static string Encrypt(string inputText, string key)
+        // IV is generated randomly on each encryption
+        public static byte[] IV; 
+
+        public static string Encrypt(string inputText, string key, CipherMode mode)
         {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-            des.Mode = CipherMode.ECB;
-            des.Padding = PaddingMode.PKCS7;
+            des.Mode = mode;
             des.Key = Encoding.ASCII.GetBytes(key);
-
+            IV = des.IV;
             using (MemoryStream stream = new MemoryStream())
             {
-                using (CryptoStream cs = new CryptoStream(stream, des.CreateEncryptor(), CryptoStreamMode.Write))
+                using (CryptoStream cs = new CryptoStream(stream, des.CreateEncryptor(des.Key, des.IV), CryptoStreamMode.Write))
                 {
                     byte[] data = Encoding.Default.GetBytes(inputText);
                     cs.Write(data, 0, data.Length);
@@ -29,16 +31,15 @@ namespace ShervinDesEncryptor
             }
         }
 
-        public static string Decrypt(string inputText, string key)
+        public static string Decrypt(string inputText, string key, CipherMode mode)
         {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-            des.Mode = CipherMode.ECB;
-            des.Padding = PaddingMode.PKCS7;
+            des.Mode = mode;
             des.Key = Encoding.ASCII.GetBytes(key);
 
             using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(inputText)))
             {
-                using (CryptoStream cs = new CryptoStream(stream, des.CreateDecryptor(), CryptoStreamMode.Read))
+                using (CryptoStream cs = new CryptoStream(stream, des.CreateDecryptor(des.Key, IV), CryptoStreamMode.Read))
                 {
                     using (StreamReader sr = new StreamReader(cs, Encoding.ASCII))
                     {
@@ -47,7 +48,11 @@ namespace ShervinDesEncryptor
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Generate a random key of size 8 (64 bits)
+        /// </summary>
+        /// <returns></returns>
         public static string GenerateRandomKey()
         {
             Random random = new Random();
