@@ -75,6 +75,8 @@ namespace ShervinDesEncryptor
                 ExecuteButton.Text = "Encrypt!";
             }
             OutputText.Clear();
+            CopyOutputText.Enabled = false;
+            OpenOutputNotepad.Enabled = false;
         }
 
         private void ImportInputText_Click(object sender, EventArgs e)
