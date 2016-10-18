@@ -1,12 +1,9 @@
 # ShervinDESEncryptor
 This is my homework 2 for course COT5930 - Applied Cryptography (Fall 2016)
 
-**Instructions**:
+**Instructions**: Please navigate to bin/Release directory and run ShervinDesEncryptor.exe
 
-Please navigate to bin/Release directory and run ShervinDesEncryptor.exe
-
-**System Requirements**: 
-Windows machine with .Net framework 4.6
+**System Requirements**: Windows machine with .Net framework 4.6
 
 **Features**:
 1. DES encryption/ decryption using two modes (ECB, and CBC)
