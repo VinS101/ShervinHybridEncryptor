@@ -260,6 +260,7 @@
             this.EncryptionModeDropdown.Name = "EncryptionModeDropdown";
             this.EncryptionModeDropdown.Size = new System.Drawing.Size(56, 21);
             this.EncryptionModeDropdown.TabIndex = 17;
+            this.EncryptionModeDropdown.SelectedIndexChanged += new System.EventHandler(this.EncryptionModeDropdown_SelectedIndexChanged);
             this.EncryptionModeDropdown.SelectedIndex = 0;
             // 
             // ShervinDesEncryptorForm

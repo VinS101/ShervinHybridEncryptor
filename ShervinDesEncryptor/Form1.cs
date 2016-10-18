@@ -123,6 +123,13 @@ namespace ShervinDesEncryptor
             Clipboard.SetText(OutputText.Text);
         }
 
+        private void EncryptionModeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OutputText.Clear();
+            OpenOutputNotepad.Enabled = false;
+            CopyOutputText.Enabled = false;
+        }
+
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
             if (IsValid())
