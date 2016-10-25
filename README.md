@@ -15,6 +15,3 @@ This is my homework 2 for course COT5930 - Applied Cryptography (Fall 2016)
 For any issues please contact me: sshahrda@fau.edu
 
 Created by: www.shervinshahrdar.com
-
-
-test
