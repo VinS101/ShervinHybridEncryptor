@@ -1,4 +1,4 @@
-# ShervinDESEncryptor
+# ShervinHybridEncryptor
 This is my project for course COT5930 - Applied Cryptography (Fall 2016)
 
 **Instructions**: Please navigate to bin/Release directory and run ShervinHybridEncryptor.exe
