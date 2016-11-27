@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
-namespace ShervinDesEncryptor
+namespace ShervinHybridEncryptor
 {
     public partial class ShervinDesEncryptorForm : Form
     {
@@ -23,14 +18,7 @@ namespace ShervinDesEncryptor
         #region Validation
         private void InputText_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(InputText.Text))
-            {
-                errorProvider1.SetError(InputText, "Input Text is empty.");
-            }
-            else
-            {
-                errorProvider1.SetError(InputText, "");
-            }
+            errorProvider1.SetError(InputText, string.IsNullOrWhiteSpace(InputText.Text) ? "Input Text is empty." : "");
         }
 
         private void SecretKey_Validating(object sender, CancelEventArgs e)
@@ -66,14 +54,7 @@ namespace ShervinDesEncryptor
         #region Control Events
         private void DecryptRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (DecryptRadioButton.Checked)
-            {
-                ExecuteButton.Text = "Decrypt!";
-            }
-            else
-            {
-                ExecuteButton.Text = "Encrypt!";
-            }
+            ExecuteButton.Text = DecryptRadioButton.Checked ? "Decrypt!" : "Encrypt!";
             OutputText.Clear();
             CopyOutputText.Enabled = false;
             OpenOutputNotepad.Enabled = false;
@@ -106,11 +87,11 @@ namespace ShervinDesEncryptor
 
         private void OpenOutputNotepad_Click(object sender, EventArgs e)
         {
-            string currentDir = Directory.GetCurrentDirectory();
-            string fileName = "Output_" + DateTime.Now.ToString("MMddYYYYhhmmss.txt");
-            string fullPath = currentDir + @"\" + fileName;
-            System.IO.File.WriteAllText(fullPath, OutputText.Text);
-            System.Diagnostics.Process.Start(fullPath);
+            var currentDir = Directory.GetCurrentDirectory();
+            var fileName = "Output_" + DateTime.Now.ToString("MMddYYYYhhmmss.txt");
+            var fullPath = currentDir + @"\" + fileName;
+            File.WriteAllText(fullPath, OutputText.Text);
+            Process.Start(fullPath);
         }
 
         private void RandomizeSecretKey_Click(object sender, EventArgs e)
@@ -136,11 +117,13 @@ namespace ShervinDesEncryptor
             {
                 Debug.WriteLine("Executing now...");
 
-                List<object> args = new List<object>();
-                args.Add(this.OperationCode);   // Encrypt or decrypt
-                args.Add(this.InputText.Text);
-                args.Add(this.SecretKey.Text);
-                args.Add(this.SelectedMode);
+                var args = new List<object>
+                {
+                    OperationCode,
+                    InputText.Text,
+                    SecretKey.Text,
+                    SelectedMode
+                };
 
                 backgroundWorker1.RunWorkerAsync(args);
             }
@@ -185,28 +168,24 @@ namespace ShervinDesEncryptor
 
         private string ImportTextfile()
         {
-            int size = -1;
-            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
-            if (result == DialogResult.OK) // Test result.
+            var result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result != DialogResult.OK) return string.Empty;
+            var file = openFileDialog1.FileName;
+            try
             {
-                string file = openFileDialog1.FileName;
-                try
-                {
-                    string text = File.ReadAllText(file);
-                    size = text.Length;
+                var text = File.ReadAllText(file);
+                var size = text.Length;
 
-                    if (size == 0) 
-                        throw new IOException();
+                if (size == 0) 
+                    throw new IOException();
 
-                    return text;
-                }
-                catch (IOException)
-                {
-                    MessageBox.Show("Invalid file. Make sure to select a valid text file.");
-                    return string.Empty;
-                }
+                return text;
             }
-            return string.Empty;
+            catch (IOException)
+            {
+                MessageBox.Show("Invalid file. Make sure to select a valid text file.");
+                return string.Empty;
+            }
         }
         #endregion
 
@@ -214,20 +193,20 @@ namespace ShervinDesEncryptor
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            List<object> genericlist = e.Argument as List<object>;
-            int OperationCode = (int)genericlist[0];
-            string inputText = genericlist[1].ToString();
-            string key = genericlist[2].ToString();
-            CipherMode mode = (CipherMode)genericlist[3];
+            var genericlist = e.Argument as List<object>;
+            if (genericlist == null) throw new Exception("Fatal Error: Bad threading");
+            var operationCode = (int)genericlist[0];
+            var inputText = genericlist[1].ToString();
+            var key = genericlist[2].ToString();
+            var mode = (CipherMode)genericlist[3];
 
-            Debug.WriteLine("Operation Code: " + OperationCode);
+            Debug.WriteLine("Operation Code: " + operationCode);
             Debug.WriteLine("inputText:" + inputText);
             Debug.WriteLine("Secret Key:" + key);
 
-            if (OperationCode == 1)
-                e.Result = ShervinEncryptor.Encrypt(inputText, key, mode);
-            else
-                e.Result = ShervinEncryptor.Decrypt(inputText, key, mode);
+            e.Result = operationCode == 1
+                ? ShervinEncryptor.Encrypt(inputText, key, mode)
+                : ShervinEncryptor.Decrypt(inputText, key, mode);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -236,7 +215,7 @@ namespace ShervinDesEncryptor
 
             if (e.Error == null)
             {
-                string result = e.Result.ToString();
+                var result = e.Result.ToString();
                 Debug.WriteLine("Result: " + result);
 
 

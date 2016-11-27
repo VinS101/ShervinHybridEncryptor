@@ -1,4 +1,4 @@
-﻿namespace ShervinDesEncryptor
+﻿namespace ShervinHybridEncryptor
 {
     partial class ShervinDesEncryptorForm
     {
