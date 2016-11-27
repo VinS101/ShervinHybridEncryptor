@@ -96,7 +96,7 @@ namespace ShervinHybridEncryptor
 
         private void RandomizeSecretKey_Click(object sender, EventArgs e)
         {
-            SecretKey.Text = ShervinEncryptor.GenerateRandomKey();
+            //SecretKey.Text = ShervinAESEncryptor.GenerateRandomKey();
         }
 
         private void CopyOutputText_Click(object sender, EventArgs e)
@@ -205,8 +205,8 @@ namespace ShervinHybridEncryptor
             Debug.WriteLine("Secret Key:" + key);
 
             e.Result = operationCode == 1
-                ? ShervinEncryptor.Encrypt(inputText, key, mode)
-                : ShervinEncryptor.Decrypt(inputText, key, mode);
+                ? Alice.SendSecretMessage(inputText)
+                : ShervinAESEncryptor.Decrypt(inputText, key, mode);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
