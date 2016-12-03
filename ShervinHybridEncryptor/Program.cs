@@ -13,7 +13,7 @@ namespace ShervinHybridEncryptor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ShervinDesEncryptorForm());
+            Application.Run(new ShervinHybridEncryptorForm());
         }
     }
 }

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace ShervinHybridEncryptor
 {
-    public partial class ShervinHybridEncryptorForm : Form
+    public partial class ShervinDesEncryptorForm : Form
     {
-        private Logger Logger { get; set; }
-        public ShervinHybridEncryptorForm()
+        public ShervinDesEncryptorForm()
         {
             InitializeComponent();
-
-            Logger = new Logger(backgroundWorker1);
         }
 
         #region Validation
@@ -37,7 +35,6 @@ namespace ShervinHybridEncryptor
         private void ClearInputText_Click(object sender, EventArgs e)
         {
             InputText.Clear();
-            OutputText.Clear();
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
@@ -48,7 +45,10 @@ namespace ShervinHybridEncryptor
 
                 var args = new List<object>
                 {
-                    InputText.Text
+                    OperationCode,
+                    InputText.Text,
+                    SecretKey.Text,
+                    SelectedMode
                 };
 
                 backgroundWorker1.RunWorkerAsync(args);
@@ -59,12 +59,35 @@ namespace ShervinHybridEncryptor
             }
         }
 
-        #endregion
-
-        #region Private Methods
         private bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(InputText.Text);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private CipherMode SelectedMode
+        {
+            get
+            {
+                if (EncryptionModeDropdown.SelectedIndex == 0)
+                    return CipherMode.ECB;
+                if (EncryptionModeDropdown.SelectedIndex == 1)
+                    return CipherMode.CBC;
+                throw new Exception("Invalid Mode");
+            }
+        }
+
+        private int OperationCode
+        {
+            get
+            {
+                if (EncryptRadioButton.Checked)
+                    return 1;
+                return 2;
+            }
         }
 
         private string ImportTextfile()
@@ -95,38 +118,47 @@ namespace ShervinHybridEncryptor
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            var genericlist = e.Argument as List<object>;
-            if (genericlist == null) throw new Exception("Fatal Error: Bad threading");
-            var inputText = genericlist[0].ToString();
+            //var genericlist = e.Argument as List<object>;
+            //if (genericlist == null) throw new Exception("Fatal Error: Bad threading");
+            //var operationCode = (int)genericlist[0];
+            //var inputText = genericlist[1].ToString();
+            //var key = genericlist[2].ToString();
+            //var mode = (CipherMode)genericlist[3];
 
-            Logger.FirstLog = DateTime.Now;
-            Logger.Log(string.Format("Alice's message: \"{0}\"", inputText));
+            //Debug.WriteLine("Operation Code: " + operationCode);
+            //Debug.WriteLine("inputText:" + inputText);
+            //Debug.WriteLine("Secret Key:" + key);
 
-            Alice.SendSecretMessage(inputText);
-        }
-
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            OutputText.AppendLine(e.UserState.ToString());
+            //e.Result = operationCode == 1
+            //    ? Alice.SendSecretMessage(inputText)
+            //    : ShervinAESEncryptor.Decrypt(inputText, key, mode);
+            Alice.SendSecretMessage("Test");
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Debug.WriteLine("Process completed");
 
+//            if (e.Error == null)
+//            {
+//                var result = e.Result.ToString();
+//                Debug.WriteLine("Result: " + result);
+
+
+//                OutputText.Clear();
+//                OutputText.Text = result;
+
+//                CopyOutputText.Enabled = true;
+//                OpenOutputNotepad.Enabled = true;
+//            }
+//            else
+//            {
+//                string message = @"Invalid data to decrypt. 
+//                Please make sure you are decrypting ciphertext that was decrypted using your chosen secret key and encryption mode.";
+//                MessageBox.Show(message);
+//            }
         }
 
         #endregion
-    }
-}
-
-public static class WinFormsExtensions
-{
-    public static void AppendLine(this TextBox source, string value)
-    {
-        if (source.Text.Length == 0)
-            source.Text = value;
-        else
-            source.AppendText("\r\n" + value);
     }
 }

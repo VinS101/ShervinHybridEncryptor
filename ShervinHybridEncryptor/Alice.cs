@@ -12,18 +12,22 @@ namespace ShervinHybridEncryptor
     {
         public static void SendSecretMessage(string inputText)
         {
+            Logger.Log("Initializing Bob...");
             using (var bob = new Bob())
             {
+                Logger.Log("Preparing RSA key for Alice...");
                 using (var rsaKey = new RSACryptoServiceProvider())
                 {
-                    // Get Bob's public key
+                    Logger.Log("Alice imports Bob's public key...");
                     rsaKey.ImportCspBlob(bob.key);
 
                     byte[] encryptedSessionKey;
                     byte[] encryptedMessage;
                     byte[] iv;
 
-                    ShervinAESUtility.Send(rsaKey, inputText, out iv, out encryptedSessionKey, out encryptedMessage);
+                    ShervinAESUtility.PrepareSend(rsaKey, inputText, out iv, out encryptedSessionKey, out encryptedMessage);
+
+                    Logger.Log("Sending message to Bob...");
                     bob.Receive(iv, encryptedSessionKey, encryptedMessage);
                 }
             }

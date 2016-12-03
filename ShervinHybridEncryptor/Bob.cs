@@ -13,13 +13,16 @@ namespace ShervinHybridEncryptor
     {
         public byte[] key;
         private RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider();
+
         private string MessageBox { get; set; }
         public Bob()
         {
             key = rsaKey.ExportCspBlob(false);
+            Logger.Log("Bob's RSA key generated...");
         }
         public void Receive(byte[] iv, byte[] encryptedSessionKey, byte[] encryptedMessage)
         {
+            Logger.Log("Bob recieved the secret message. Decrypting");
             using (Aes aes = new AesCryptoServiceProvider())
             {
                 aes.IV = iv;
@@ -37,7 +40,8 @@ namespace ShervinHybridEncryptor
                         cs.Close();
 
                         MessageBox = Encoding.UTF8.GetString(plaintext.ToArray());
-                        Debug.WriteLine("Message recieved!: " + MessageBox);
+                        Logger.Log("Decryption Complete!");
+                        Logger.Log("Decrypted Message: " + MessageBox, true);
                     }
                 }
             }
