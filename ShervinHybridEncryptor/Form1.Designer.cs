@@ -136,7 +136,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 510);
+            this.ClientSize = new System.Drawing.Size(723, 510);
             this.Controls.Add(this.ExecuteButton);
             this.Controls.Add(this.ClearInputText);
             this.Controls.Add(this.OutputText);

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShervinDesEncryptor.Properties
+namespace ShervinHybridEncryptor.Properties
 {
 
 
