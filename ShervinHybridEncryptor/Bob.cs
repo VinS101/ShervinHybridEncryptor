@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,6 +13,7 @@ namespace ShervinHybridEncryptor
     {
         public byte[] key;
         private RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider();
+        private string MessageBox { get; set; }
         public Bob()
         {
             key = rsaKey.ExportCspBlob(false);
@@ -28,13 +30,15 @@ namespace ShervinHybridEncryptor
 
                 // Decrypt the message
                 using (var plaintext = new MemoryStream())
-                using (var cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write))
                 {
-                    cs.Write(encryptedMessage, 0, encryptedMessage.Length);
-                    cs.Close();
+                    using (var cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(encryptedMessage, 0, encryptedMessage.Length);
+                        cs.Close();
 
-                    var message = Encoding.UTF8.GetString(plaintext.ToArray());
-                    Console.WriteLine(message);
+                        MessageBox = Encoding.UTF8.GetString(plaintext.ToArray());
+                        Debug.WriteLine("Message recieved!: " + MessageBox);
+                    }
                 }
             }
         }

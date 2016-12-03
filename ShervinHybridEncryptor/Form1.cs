@@ -193,44 +193,45 @@ namespace ShervinHybridEncryptor
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            var genericlist = e.Argument as List<object>;
-            if (genericlist == null) throw new Exception("Fatal Error: Bad threading");
-            var operationCode = (int)genericlist[0];
-            var inputText = genericlist[1].ToString();
-            var key = genericlist[2].ToString();
-            var mode = (CipherMode)genericlist[3];
+            //var genericlist = e.Argument as List<object>;
+            //if (genericlist == null) throw new Exception("Fatal Error: Bad threading");
+            //var operationCode = (int)genericlist[0];
+            //var inputText = genericlist[1].ToString();
+            //var key = genericlist[2].ToString();
+            //var mode = (CipherMode)genericlist[3];
 
-            Debug.WriteLine("Operation Code: " + operationCode);
-            Debug.WriteLine("inputText:" + inputText);
-            Debug.WriteLine("Secret Key:" + key);
+            //Debug.WriteLine("Operation Code: " + operationCode);
+            //Debug.WriteLine("inputText:" + inputText);
+            //Debug.WriteLine("Secret Key:" + key);
 
-            e.Result = operationCode == 1
-                ? Alice.SendSecretMessage(inputText)
-                : ShervinAESEncryptor.Decrypt(inputText, key, mode);
+            //e.Result = operationCode == 1
+            //    ? Alice.SendSecretMessage(inputText)
+            //    : ShervinAESEncryptor.Decrypt(inputText, key, mode);
+            Alice.SendSecretMessage("Test");
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Debug.WriteLine("Process completed");
 
-            if (e.Error == null)
-            {
-                var result = e.Result.ToString();
-                Debug.WriteLine("Result: " + result);
+//            if (e.Error == null)
+//            {
+//                var result = e.Result.ToString();
+//                Debug.WriteLine("Result: " + result);
 
 
-                OutputText.Clear();
-                OutputText.Text = result;
+//                OutputText.Clear();
+//                OutputText.Text = result;
 
-                CopyOutputText.Enabled = true;
-                OpenOutputNotepad.Enabled = true;
-            }
-            else
-            {
-                string message = @"Invalid data to decrypt. 
-                Please make sure you are decrypting ciphertext that was decrypted using your chosen secret key and encryption mode.";
-                MessageBox.Show(message);
-            }
+//                CopyOutputText.Enabled = true;
+//                OpenOutputNotepad.Enabled = true;
+//            }
+//            else
+//            {
+//                string message = @"Invalid data to decrypt. 
+//                Please make sure you are decrypting ciphertext that was decrypted using your chosen secret key and encryption mode.";
+//                MessageBox.Show(message);
+//            }
         }
         #endregion
     }
