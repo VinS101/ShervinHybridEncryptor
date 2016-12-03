@@ -149,7 +149,7 @@
             this.MaximizeBox = false;
             this.Name = "ShervinHybridEncryptorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Shervin DES Encryptor";
+            this.Text = "Shervin Hybrid Encryptor";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

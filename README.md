@@ -6,7 +6,12 @@ This is my project for course COT5930 - Applied Cryptography (Fall 2016)
 **System Requirements**: Windows machine with .Net framework 4.6
 
 **Features**:
+- Text import
+- RSA key establishment (asymmetric encryption)
+- AES symmetric encryption
+- Advanced multi-threaded GUI
 
+Youtube demo available at: https://youtu.be/vP17LAEmZRo
 
 For any issues please contact me: sshahrda@fau.edu
 
